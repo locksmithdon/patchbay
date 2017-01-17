@@ -4,6 +4,7 @@ var Scroller = require('pull-scroll')
 var mfr = require('map-filter-reduce')
 
 exports.needs = {
+  build_scroller: 'first',
   message_render: 'first',
   message_compose: 'first',
   sbot_log: 'first',
