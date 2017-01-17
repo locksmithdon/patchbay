@@ -12,21 +12,16 @@ exports.create = function (api) {
     mcss: () => fs.readFileSync(__filename.replace(/js$/, 'mcss'), 'utf8')
   }
 
-  function build_scroller (children) {
-    if (children.indexOf('content') < 0)
-      console.error("build_scroller expected be told position of a 'content' element, instead got", children)
+  function build_scroller ({ prepend = [], append = [] } = {}) {
+    var content = h('section.content')
 
-    var content = h('div.content')
-    var container = h('Scroller',
-
-      { style: { overflow: 'auto' } }, 
-      [
-        h('div.wrapper', children.map(child => child === 'content' 
-          ? content
-          : child
-        ))
-      ]
-    )
+    var container = h('Scroller', { style: { overflow: 'auto' } }, [
+      h('div.wrapper', [
+        h('header', prepend),
+        content,
+        h('footer', append)
+      ])
+    ])
 
     return {
       content,

@@ -63,10 +63,7 @@ exports.create = function (api) {
       }
 
       var composer = api.message_compose(meta, {shrink: false, placeholder: 'Write a reply'})
-      var { container, content } = api.build_scroller([
-        'content',
-        composer,
-      ])
+      var { container, content } = api.build_scroller({ append: composer })
 
       api.message_name(id, function (err, name) {
         container.title = name

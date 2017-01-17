@@ -32,10 +32,7 @@ exports.create = function (api) {
     if(path !== '/public') return 
 
     const composer = api.message_compose({type: 'post'}, {placeholder: 'Write a public message'})
-    var { container, content } = api.build_scroller([
-      composer,
-      'content'
-    ])
+    var { container, content } = api.build_scroller({ prepend: composer })
 
     pull(
       u.next(api.sbot_log, {old: false, limit: 100}),

@@ -23,10 +23,7 @@ exports.create = function (api) {
     if(!ref.isFeed(id)) return
 
     const profile = h('div', api.avatar_profile(id))
-    var { container, content } = api.build_scroller([
-      profile,
-      'content'
-    ])
+    var { container, content } = api.build_scroller({ prepend: profile })
 
     api.signifier(id, function (_, names) {
       if(names.length) container.title = names[0].name
