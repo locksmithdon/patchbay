@@ -23,12 +23,11 @@ exports.create = function (api) {
     if(!ref.isFeed(id)) return
 
     const profile = h('div', api.avatar_profile(id))
-    var { container, content } = api.build_scroller({ prepend: profile })
-
+    var { container, content } = api.build_scroller({ prepend: [profile, h('header', 'Activity')] })
+          
     api.signifier(id, function (_, names) {
       if(names.length) container.title = names[0].name
     })
-
 
     pull(
       api.sbot_user_feed({id: id, old: false, live: true}),
@@ -42,8 +41,8 @@ exports.create = function (api) {
         id: id, reverse: true,
         limit: 50, live: false
       }, ['value', 'sequence']),
-      pull.through(console.log.bind(console)),
-      Scroller(container, content, api.message_render, false, false)
+      // pull.through(console.log.bind(console)),
+      Scroller(div, content, api.message_render, false, false)
     )
 
     return container
